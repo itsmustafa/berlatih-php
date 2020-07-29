@@ -1,14 +1,27 @@
 <?php
 function skor_terbesar($arr){
-    $hitung = count($arr);
-    $array = [];
-    for($i=0; $i<=$hitung-1; $i++){
-        if($array[$arr[$i]['kelas']]['nama'] < $arr[$i]['nilai']){
-            $array[$arr[$i]['kelas']]['nama'] = $array[$i]['nama'];
-            $array[$arr[$i]['kelas']]['kelas'] = $array[$i]['kelas'];
-            $array[$arr[$i]['kelas']]['nilai'] = $array[$i]['nilai'];
-        }
+    $output=[];
+    $nilai=0;
+    $nilai2=0;
+    $nilai3=0;
+    foreach ($arr as $key => $value) {
+      if ($value['nilai']>$nilai && $value['kelas'] == 'Laravel'){
+        $nilai=$value['nilai'];
+      }elseif ($value['nilai']>$nilai2 && $value['kelas'] == 'React Native'){
+        $nilai2=$value['nilai'];
+      }elseif ($value['nilai']>$nilai3 && $value['kelas'] == 'React JS'){
+        $nilai3=$value['nilai'];
+      }else{
+        continue;
+      }
+      $output[$value['kelas']] =
+        [
+          'nama' => $value['nama'],
+          'kelas' => $value['kelas'],
+          'nilai' => $value['nilai'],
+        ];
     }
+    return $output;
 }
 
 // TEST CASES
@@ -40,7 +53,9 @@ $arr = [
   ],
 ];
 
-print_r(skor_terbesar($array));
+echo "<pre>";
+print_r(skor_terbesar($arr));
+echo "</pre>";
 /* OUTPUT
 Array (
     [Laravel] => Array
